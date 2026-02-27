@@ -6,17 +6,38 @@ const props = defineProps<{
   index: number
 }>();
 
+const safeChord = computed(() => props.chord.replace(/"/g, '&quot;'));
+
 const srcDoc = computed(() => `
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-      body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;}
-      img { max-width: 85%; max-height: 85%; object-fit: contain; display: block; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background: transparent;
+      }
+      img {
+        max-width: 95%;
+        max-height: 95%;
+        object-fit: contain;
+        display: block;
+      }
     </style>
   </head>
   <body>
-    <ins class="scales_chords_api" chord="${props.chord}" output="image"></ins>
+    <ins class="scales_chords_api" chord="${safeChord.value}" output="image"></ins>
     <script async type="text/javascript" src="https://www.scales-chords.com/api/scales-chords-api.js"><\/script>
   </body>
 </html>
@@ -32,10 +53,12 @@ const romanDigit = computed(() => toRoman(props.index));
 
 <template>
   <div class="chord-wrapper">
+    <p class="chord-name">{{ chord }}</p>
     <iframe 
+      :key="`${chord}-${index}`"
       :srcdoc="srcDoc" 
       title="Chord Display"
-      style="border: none; width: 300px; height: 250px;"
+      class="chord-frame"
       scrolling="no"
     ></iframe>
     <div class="roman-numeral">{{ romanDigit }}</div>
@@ -48,15 +71,29 @@ const romanDigit = computed(() => toRoman(props.index));
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 4px;
   margin: 10px;
+  min-width: 240px;
+}
+
+.chord-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: white;
+}
+
+.chord-frame {
+  border: none;
+  width: min(100%, 320px);
+  height: 250px;
 }
 
 .roman-numeral {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333; /* Or keep it white depending on background, checking sideMenu: it has a gradient background, but this file is white? sideMenu has white text color rule. Let's make it inherit or white */
-  color: white; /* sideMenu sets text color white, but let's be safe */
-  margin-top: -20px;
-  margin-bottom: 10px;
+  color: white;
+  margin: 0;
+  opacity: 0.92;
 }
 </style>

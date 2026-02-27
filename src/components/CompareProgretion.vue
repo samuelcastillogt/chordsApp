@@ -100,7 +100,7 @@ const getMaxLength = () => {
 .main {
     background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(79, 128, 158, 1) 100%);
     min-height: 100vh;
-    padding: 20px;
+    padding: 20px 20px 140px;
     color: white;
     font-family: 'Inter', sans-serif;
 }
@@ -198,6 +198,21 @@ select {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     padding: 10px;
-    min-height: 280px;
+    min-height: 320px;
+}
+
+@media (max-width: 900px) {
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-header {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .grade-cell {
+        padding-top: 12px;
+    }
 }
 </style>
