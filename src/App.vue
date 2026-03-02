@@ -24,6 +24,11 @@ const dockItems: DockItem[] = [
     label: 'Comparar',
     iconPath: 'M7.5 6h9m-9 12h9M6 10.5l3 3-3 3m12-6-3 3 3 3',
   },
+  {
+    to: '/song/noche-en-seis-cuerdas',
+    label: 'Cancion',
+    iconPath: 'M9 18V5l10-2v11M9 10l10-2',
+  },
 ];
 
 const dockScale = (index: number) => {
